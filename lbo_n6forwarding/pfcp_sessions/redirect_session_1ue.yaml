@@ -1,0 +1,12 @@
+messages:
+  - messageType: SessionModificationRequest
+    messageParams:        
+      seid: 1
+      updateFars:
+      - farID: 1
+        updateForwardingParameters: 
+          destinationInterface: Core
+          networkInstance: core.oai.org
+          redirectInformation:
+            redirectAddressType: 2
+            redirectAddress: facebook.com

@@ -151,7 +151,7 @@ services:
             - EXTERNAL_NRF=no
             - NF_REGISTRATION=no
             - SMF_SELECTION=no
-            - USE_FQDN_DNS=yes
+            - USE_FQDN_DNS=no
             - EXTERNAL_AUSF=yes
             - NRF_API_VERSION=v1
             - NRF_FQDN=unknown
@@ -208,7 +208,7 @@ services:
             - NRF_FQDN=unknown
             - REGISTER_NRF=no
             - DISCOVER_UPF=no
-            - USE_FQDN_DNS=yes
+            - USE_FQDN_DNS=no
             - USE_NETWORK_INSTANCE=yes
             - DNN_RANGE1=12.1.1.2 - 12.1.1.128
             - DNN_RANGE0=12.2.1.2 - 12.2.1.128
