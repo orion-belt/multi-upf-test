@@ -1,0 +1,52 @@
+messages:
+  - messageType: SessionEstablishmentRequest
+    messageParams:
+      seid: 1
+      pdrs:
+      - pdrID: 1
+        precedence: 0
+        pdi:
+          sourceInterface: Access
+          networkInstance: access.oai.org
+          localFTEID:
+            teid: 1
+            ip4: 192.168.72.202
+          qfi: 8
+          ueIPAddress:
+            isDestination: false
+            ip4: 10.10.10.10
+        outerHeaderRemoval: OUTER_HEADER_GTPU_UDP_IPV4
+        farID: 1
+      - pdrID: 2
+        precedence: 0
+        pdi:
+          sourceInterface: Core
+          networkInstance: core.oai.org
+          localFTEID:
+            teid: 4
+            ip4: 192.168.73.202
+          ueIPAddress:
+            isDestination: true
+            ip4: 10.10.10.10
+        outerHeaderRemoval: OUTER_HEADER_GTPU_UDP_IPV4
+        farID: 2
+      fars:
+      - farID: 1
+        applyAction: Forward
+        forwardingParameters:
+          destinationInterface: Core
+          networkInstance: core.oai.org
+          outerHeaderCreation:
+            desc: OUTER_HEADER_CREATION_GTPU_UDP_IPV4
+            teid: 3
+            ip: 192.168.73.203
+      - farID: 2
+        applyAction: Forward
+        forwardingParameters:
+          destinationInterface: Access
+          networkInstance: access.oai.org
+          outerHeaderCreation:
+            desc: OUTER_HEADER_CREATION_GTPU_UDP_IPV4
+            teid: 2
+            ip: 172.168.72.1
+
