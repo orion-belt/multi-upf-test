@@ -1,0 +1,160 @@
+#######################################
+Packet Forwarding without LBO
+#######################################
+
+
+00:01:03:070673: af-packet-input
+  af_packet: hw_if_index 4 next-index 4
+    tpacket2_hdr:
+      status 0x20000001 len 86 snaplen 86 mac 66 net 80
+      sec 0x623b06bc nsec 0x11cf8974 vlan 0 vlan_tpid 0
+00:01:03:070675: ethernet-input
+  IP4: 02:42:17:2a:08:d0 -> 02:fe:67:a6:0a:b9
+00:01:03:070677: ip4-input
+  UDP: 192.168.72.1 -> 192.168.72.202
+    tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 2152 -> 2152
+    length 52, checksum 0x49bf
+00:01:03:070678: ip4-lookup
+  fib 2 dpo-idx 16 flow hash: 0x00000000
+  UDP: 192.168.72.1 -> 192.168.72.202
+    tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 2152 -> 2152
+    length 52, checksum 0x49bf
+00:01:03:070679: ip4-local
+    UDP: 192.168.72.1 -> 192.168.72.202
+      tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+      fragment id 0x0001
+    UDP: 2152 -> 2152
+      length 52, checksum 0x49bf
+00:01:03:070681: ip4-udp-lookup
+  UDP: src-port 2152 dst-port 2152
+00:01:03:070681: upf-gtpu4-input
+  GTPU decap from gtpu_session0 teid 0x000004d2 next 1 error 0
+00:01:03:070682: upf-ip4-flow-process
+  upf_session0 cp-seid 0x0000000000000000
+  FlowInfo - sw_if_index 4, next_index = 2
+  proto 0x11, 22.1.1.2:53 <-> 163.172.242.230:53, seid 0x0000000000000000
+  00000000: 0000000000000000000000000000000000000000160101020000000000000000
+  00000020: 00000000a3acf2e60035003511000000
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 64, length 28, checksum 0xcd3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+00:01:03:070684: upf-ip4-input
+  upf_session0 cp-seid 0x0000000000000000 pdr 0 far 11
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 64, length 28, checksum 0xcd3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+00:01:03:070684: upf-ip4-forward
+  upf_session0 cp-seid 0x0000000000000000 pdr 0 far 11
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 64, length 28, checksum 0xcd3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+00:01:03:070685: ip4-input
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 64, length 28, checksum 0xcd3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+00:01:03:070685: ip4-lookup
+  fib 1 dpo-idx 10 flow hash: 0x00000000
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 64, length 28, checksum 0xcd3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+00:01:03:070686: ip4-rewrite
+  tx_sw_if_index 2 dpo-idx 10 : ipv4 via 192.168.73.1 host-n6: mtu:1500 next:6 0242d13b450c02fe6ff7ab9e0800 flow hash: 0x00000000
+  00000000: 0242d13b450c02fe6ff7ab9e08004500001c000100003f11ce3a16010102a3ac
+  00000020: f2e600350035000851de000000000000000000000000000000000000
+00:01:03:070686: host-n6-output
+  host-n6 
+  IP4: 02:fe:6f:f7:ab:9e -> 02:42:d1:3b:45:0c
+  UDP: 22.1.1.2 -> 163.172.242.230
+    tos 0x00, ttl 63, length 28, checksum 0xce3a dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x51de
+    
+    
+#######################################
+Packet Forwarding with LBO
+#######################################
+
+00:00:39:979614: af-packet-input
+  af_packet: hw_if_index 4 next-index 4
+    tpacket2_hdr:
+      status 0x20000001 len 86 snaplen 86 mac 66 net 80
+      sec 0x623b06a5 nsec 0xd367038 vlan 0 vlan_tpid 0
+00:00:39:979620: ethernet-input
+  IP4: 02:42:17:2a:08:d0 -> 02:fe:67:a6:0a:b9
+00:00:39:979623: ip4-input
+  UDP: 192.168.72.1 -> 192.168.72.202
+    tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 2152 -> 2152
+    length 52, checksum 0x6815
+00:00:39:979625: ip4-lookup
+  fib 2 dpo-idx 16 flow hash: 0x00000000
+  UDP: 192.168.72.1 -> 192.168.72.202
+    tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 2152 -> 2152
+    length 52, checksum 0x6815
+00:00:39:979627: ip4-local
+    UDP: 192.168.72.1 -> 192.168.72.202
+      tos 0x00, ttl 64, length 72, checksum 0x6888 dscp CS0 ecn NON_ECN
+      fragment id 0x0001
+    UDP: 2152 -> 2152
+      length 52, checksum 0x6815
+00:00:39:979628: ip4-udp-lookup
+  UDP: src-port 2152 dst-port 2152
+00:00:39:979629: upf-gtpu4-input
+  GTPU decap from gtpu_session0 teid 0x000004d2 next 1 error 0
+00:00:39:979630: upf-ip4-flow-process
+  upf_session0 cp-seid 0x0000000000000000
+  FlowInfo - sw_if_index 4, next_index = 2
+  proto 0x11, 142.251.37.238:53 <-> 22.1.1.2:53, seid 0x0000000000000000
+  00000000: 00000000000000000000000000000000000000008efb25ee0000000000000000
+  00000020: 00000000160101020035003511000000
+  UDP: 22.1.1.2 -> 142.251.37.238
+    tos 0x00, ttl 64, length 28, checksum 0xaee4 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x3388
+00:00:39:979632: upf-ip4-input
+  upf_session0 cp-seid 0x0000000000000000 pdr 1 far 12
+  UDP: 22.1.1.2 -> 142.251.37.238
+    tos 0x00, ttl 64, length 28, checksum 0xaee4 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x3388
+00:00:39:979634: upf-ip4-forward
+  upf_session0 cp-seid 0x0000000000000000 pdr 1 far 12
+  UDP: 22.1.1.2 -> 142.251.37.238
+    tos 0x00, ttl 64, length 28, checksum 0xaee4 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x3388
+00:00:39:979652: ip4-rewrite
+  tx_sw_if_index 1 dpo-idx 11 : ipv4 via 192.168.74.1 host-n6-lbo: mtu:1500 next:5 02424883696402fe0ef9aec60800 flow hash: 0x00000000
+  00000000: 02424883696402fe0ef9aec608004500001c000100003f11afe4160101028efb
+  00000020: 25ee0035003500083388000000000000000000000000000000000000
+00:00:39:979654: host-n6-lbo-output
+  host-n6-lbo 
+  IP4: 02:fe:0e:f9:ae:c6 -> 02:42:48:83:69:64
+  UDP: 22.1.1.2 -> 142.251.37.238
+    tos 0x00, ttl 63, length 28, checksum 0xafe4 dscp CS0 ecn NON_ECN
+    fragment id 0x0001
+  UDP: 53 -> 53
+    length 8, checksum 0x3388
+
+
